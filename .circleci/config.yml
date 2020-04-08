@@ -1,21 +1,19 @@
 version: 2.1
-
-orbs:
-  python: circleci/python@0.2.1
-
 jobs:
-  build-and-test:
-    executor: python/default
-    steps:
-      - checkout
-      #- python/load-cache
-      #- python/install-deps
-      #- python/save-cache
-      #- run:
-         # command: ./manage.py test
-         # name: Test
+  build-app:
+    working_directory: ~/project
+    docker:
+      - image: circleci/python:3.6.2-stretch-browsers
+  steps:
+    - checkout
+    - run:
+        name: Start server
+        command: |
+        export FLASK_APP=project/__init__.py
+        export FLASK_ENV=development
+        python manage.py run
 
 workflows:
   main:
     jobs:
-      - build-and-test
+      - build-app
