@@ -1,17 +1,18 @@
 version: 2.1
 jobs:
   build-app:
-    working_directory: ~/project
-    docker:
+    docker: 
       - image: circleci/python:3.6.2-stretch-browsers
-  steps:
-    - checkout
-    - run:
-        name: Start server
-        command: |
-          export FLASK_APP=project/__init__.py
-          export FLASK_ENV=development
-          python manage.py run
+    working_directory: ~/project
+    steps:
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
+      - run:
+          name: Start server
+          command: |
+            export FLASK_APP=project/__init__.py
+            export FLASK_ENV=development
+            python manage.py run
 
 workflows:
   main:
